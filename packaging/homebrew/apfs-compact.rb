@@ -1,7 +1,7 @@
 class ApfsCompact < Formula
   desc "Replace duplicate and near-duplicate files with APFS clones"
   homepage "https://github.com/natbro/apfs-compact"
-  url "https://github.com/natbro/apfs-compact/archive/refs/tags/v0.1.0.tar.gz"
+  url "https://github.com/natbro/apfs-compact/archive/refs/tags/v0.1.1.tar.gz"
   sha256 "0000000000000000000000000000000000000000000000000000000000000000"
   license "MIT-0"
   head "https://github.com/natbro/apfs-compact.git", branch: "main"

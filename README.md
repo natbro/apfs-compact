@@ -4,9 +4,11 @@ Finds duplicate and near-duplicate files across directories on an APFS volume
 and replaces the duplicates with **APFS clones** of one copy, so they share the
 same blocks on disk.
 
-- **Exact duplicates** (any size above `--min-size`) become full clones.
-- **Near-duplicates**: files larger than 100 MB that differ in less than 10% of
-  their size. Each one becomes a clone of the base with only the differing
+- **Exact duplicates** (any size at or above 16 KiB by default, set with
+  `--min-size`) become full clones.
+- **Near-duplicates**: files larger than 100 MB (default, set with
+  `--near-min-size`) that differ in less than 10% of their size (default, set
+  with `--max-diff`). Each one becomes a clone of the base with only the differing
   chunks rewritten. Edits don't have to be block-aligned, and files may differ
   in length.
 
@@ -42,9 +44,10 @@ apfs-compact usage ~/Movies                                # du vs private vs ex
 apfs-compact inspect some/file                             # everything the tool sees about a file (JSON)
 ```
 
-Options: `--min-size 16k`, `--near-min-size 100MB`, `--max-diff 10`,
-`--no-near`, `--granularity SIZE`, `--exclude GLOB`, `--threads N`, `--json`,
-`--yes`, `--verbose`.
+Options (values shown are the defaults): `--min-size 16k`,
+`--near-min-size 100MB`, `--max-diff 10` (percent), `--no-near`,
+`--granularity SIZE` (measured per volume), `--exclude GLOB`, `--threads 4`,
+`--json`, `--yes`, `--verbose`. Run `apfs-compact --help` for details.
 
 `scan` modifies nothing. The only writes are a 1 MB temp file (plus a clone of
 it) used to measure clone granularity, which `--granularity 16k` skips, and,
