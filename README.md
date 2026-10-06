@@ -206,12 +206,12 @@ they are reported and left alone. A third drives the CLI binary.
 
 1. Bump `apfsCompactVersion` in `Sources/ApfsCompactCore/Version.swift`, commit,
    and tag `vX.Y.Z`; push the tag.
-2. In `packaging/homebrew/apfs-compact.rb`, update `url` to the new tag and set
-   `sha256` to the output of
+2. In the [natbro/homebrew-tap](https://github.com/natbro/homebrew-tap) repo,
+   update `url` in `Formula/apfs-compact.rb` to the new tag and set `sha256` to
+   the output of
    `curl -sL https://github.com/natbro/apfs-compact/archive/refs/tags/vX.Y.Z.tar.gz | shasum -a 256`.
-3. Copy the formula to `Formula/apfs-compact.rb` in the `natbro/homebrew-tap`
-   repo, then check it with
-   `brew audit --new --strict natbro/tap/apfs-compact`,
+3. Push the tap; its CI audits, builds and tests the formula. To check locally:
+   `brew audit --strict natbro/tap/apfs-compact`,
    `brew install --build-from-source natbro/tap/apfs-compact` and
    `brew test natbro/tap/apfs-compact`.
 
