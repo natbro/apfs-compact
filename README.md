@@ -17,15 +17,20 @@ access, backup and date-added times, and data-protection class. Two things
 can't be kept, by any tool: the inode number and ctime. See
 [What can't be preserved](#what-cant-be-preserved).
 
-## Build
+## Install
+
+```bash
+brew install natbro/tap/apfs-compact
+```
+
+Or build from source (Swift 5.9+ / Xcode 15+, macOS 13+):
 
 ```bash
 swift build -c release
 ```
 
-The binary is `.build/release/apfs-compact` (it may be under
-`.build/out/Products/Release/` with newer toolchains). It has no dependencies
-beyond the macOS SDK.
+The binary is `.build/release/apfs-compact`. It has no dependencies beyond the
+macOS SDK. `apfs-compact --version` prints the version.
 
 ## Usage
 
@@ -193,6 +198,19 @@ The randomized test checks:
 
 A second test covers hard links, compressed files and an immutable directory:
 they are reported and left alone. A third drives the CLI binary.
+
+## Releasing
+
+1. Bump `apfsCompactVersion` in `Sources/ApfsCompactCore/Version.swift`, commit,
+   and tag `vX.Y.Z`; push the tag.
+2. In `packaging/homebrew/apfs-compact.rb`, update `url` to the new tag and set
+   `sha256` to the output of
+   `curl -sL https://github.com/natbro/apfs-compact/archive/refs/tags/vX.Y.Z.tar.gz | shasum -a 256`.
+3. Copy the formula to `Formula/apfs-compact.rb` in the `natbro/homebrew-tap`
+   repo, then check it with
+   `brew audit --new --strict natbro/tap/apfs-compact`,
+   `brew install --build-from-source natbro/tap/apfs-compact` and
+   `brew test natbro/tap/apfs-compact`.
 
 ## License
 

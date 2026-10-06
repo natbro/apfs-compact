@@ -4,6 +4,7 @@ import Foundation
 
 let usageText = """
 usage: apfs-compact <command> [options] DIR...
+       apfs-compact --version
 
 Finds duplicate and near-duplicate files and replaces the duplicates with APFS
 clones of one copy. A near-duplicate becomes a clone with only the differing
@@ -34,6 +35,7 @@ options:
   --yes                  (apply) don't prompt
   --json                 machine-readable output
   -v, --verbose          list every skipped file
+  --version              print the version and exit
 """
 
 func die(_ msg: String) -> Never {
@@ -47,6 +49,7 @@ var args = Array(CommandLine.arguments.dropFirst())
 guard let command = args.first else { print(usageText); exit(2) }
 args.removeFirst()
 if command == "-h" || command == "--help" || command == "help" { print(usageText); exit(0) }
+if command == "--version" || command == "version" { print("apfs-compact \(apfsCompactVersion)"); exit(0) }
 
 var opts = PlannerOptions()
 var json = false, verbose = false, yes = false, dryRun = false
