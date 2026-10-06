@@ -193,3 +193,7 @@ The randomized test checks:
 
 A second test covers hard links, compressed files and an immutable directory:
 they are reported and left alone. A third drives the CLI binary.
+
+## License
+
+[MIT No Attribution](LICENSE) (SPDX: `MIT-0`). Use it however you like; no warranty, no liability.
